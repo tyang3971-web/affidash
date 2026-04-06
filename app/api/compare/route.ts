@@ -1,4 +1,5 @@
 import { NextRequest } from "next/server";
+import { alertGeminiError } from "@/app/gemini-alert";
 
 export async function POST(request: NextRequest) {
   try {
@@ -54,6 +55,7 @@ export async function POST(request: NextRequest) {
     if (!res.ok) {
       const errBody = await res.text();
       console.error("Gemini API error:", errBody);
+      alertGeminiError("affidash", "/api/compare", errBody);
       return Response.json(
         { error: "AI 服務暫時無法使用" },
         { status: 502 }
