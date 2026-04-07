@@ -124,6 +124,117 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Demo: Dashboard Preview */}
+      <section className="py-20 px-4 bg-gray-50">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-3xl font-bold text-center text-gray-900 mb-3">
+            連結管理儀表板
+          </h2>
+          <p className="text-center text-gray-500 mb-10">即時追蹤所有導購連結的點擊數據</p>
+
+          {/* Stats Demo */}
+          <div className="grid grid-cols-3 gap-4 mb-6">
+            <div className="bg-white rounded-xl p-5 border border-gray-100">
+              <div className="text-sm text-gray-500 mb-1">今日點擊</div>
+              <div className="text-3xl font-bold text-gray-900">28</div>
+            </div>
+            <div className="bg-white rounded-xl p-5 border border-gray-100">
+              <div className="text-sm text-gray-500 mb-1">本週點擊</div>
+              <div className="text-3xl font-bold text-gray-900">198</div>
+            </div>
+            <div className="bg-white rounded-xl p-5 border border-gray-100">
+              <div className="text-sm text-gray-500 mb-1">本月點擊</div>
+              <div className="text-3xl font-bold text-orange-500">805</div>
+            </div>
+          </div>
+
+          {/* Table Demo */}
+          <div className="bg-white rounded-xl border border-gray-100 overflow-hidden mb-6">
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-gray-100 bg-gray-50">
+                  <th className="text-left px-4 py-3 font-medium text-gray-600">標題</th>
+                  <th className="text-left px-4 py-3 font-medium text-gray-600">短連結</th>
+                  <th className="text-left px-4 py-3 font-medium text-gray-600">平台</th>
+                  <th className="text-right px-4 py-3 font-medium text-gray-600">點擊</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  { title: 'Sony WH-1000XM5 降噪耳機', short: 'affi.dash/sony-xm5', platform: '蝦皮', color: 'bg-orange-100 text-orange-700', clicks: 342 },
+                  { title: 'Dyson V15 吸塵器', short: 'affi.dash/dyson-v15', platform: 'momo', color: 'bg-pink-100 text-pink-700', clicks: 218 },
+                  { title: 'Apple AirPods Pro 2', short: 'affi.dash/airpods-pro2', platform: 'Amazon', color: 'bg-blue-100 text-blue-700', clicks: 156 },
+                  { title: '理膚寶水溫泉噴霧', short: 'affi.dash/lrp-spray', platform: '蝦皮', color: 'bg-orange-100 text-orange-700', clicks: 89 },
+                ].map((item) => (
+                  <tr key={item.short} className="border-b border-gray-50 hover:bg-gray-50/50">
+                    <td className="px-4 py-3 font-medium text-gray-900">{item.title}</td>
+                    <td className="px-4 py-3 text-orange-500 font-mono text-xs">{item.short}</td>
+                    <td className="px-4 py-3"><span className={`text-xs px-2 py-1 rounded-full font-medium ${item.color}`}>{item.platform}</span></td>
+                    <td className="px-4 py-3 text-right font-semibold text-gray-900">{item.clicks}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="text-center">
+            <Link href="/dashboard" className="text-orange-500 font-medium hover:underline">
+              進入儀表板體驗 →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Demo: AI Compare Table */}
+      <section className="py-20 px-4">
+        <div className="max-w-5xl mx-auto">
+          <h2 className="text-3xl font-bold text-center text-gray-900 mb-3">
+            AI 產品比較表
+          </h2>
+          <p className="text-center text-gray-500 mb-10">輸入產品名稱，AI 自動生成專業比較表格，可直接嵌入文章</p>
+
+          <div className="bg-white rounded-xl border border-gray-200 p-6 overflow-x-auto">
+            <div className="flex items-center gap-2 mb-4">
+              <span className="text-xs bg-orange-100 text-orange-600 px-2 py-1 rounded-full font-medium">AI 生成範例</span>
+              <span className="text-xs text-gray-400">分類：3C 降噪耳機</span>
+            </div>
+            <table className="w-full border-collapse text-sm">
+              <thead>
+                <tr>
+                  <th className="bg-orange-50 px-4 py-3 text-left border border-gray-200 font-semibold text-gray-700">比較項目</th>
+                  <th className="bg-orange-50 px-4 py-3 text-left border border-gray-200 font-semibold text-gray-700">Sony WH-1000XM5</th>
+                  <th className="bg-orange-50 px-4 py-3 text-left border border-gray-200 font-semibold text-gray-700">Apple AirPods Max</th>
+                  <th className="bg-orange-50 px-4 py-3 text-left border border-gray-200 font-semibold text-gray-700">Bose 700</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[
+                  ['價格', 'NT$9,490', 'NT$18,490', 'NT$11,900'],
+                  ['降噪等級', '★★★★★', '★★★★★', '★★★★☆'],
+                  ['續航力', '30 小時', '20 小時', '20 小時'],
+                  ['重量', '250g', '384g', '250g'],
+                  ['連線', 'Bluetooth 5.2', 'Bluetooth 5.0', 'Bluetooth 5.0'],
+                  ['特色', '自適應降噪、Speak-to-Chat', 'Digital Crown 控制、空間音訊', '11 段降噪調整、語音助手'],
+                  ['蝦皮佣金', '3.5%（約 NT$332）', '2.8%（約 NT$518）', '3.2%（約 NT$381）'],
+                  ['推薦推廣', '⭐ 最佳性價比', '高單價高佣金', '中階穩定選擇'],
+                ].map(([label, ...values]) => (
+                  <tr key={label} className="hover:bg-gray-50">
+                    <td className="px-4 py-2.5 border border-gray-200 font-medium text-gray-700 bg-gray-50">{label}</td>
+                    {values.map((v, i) => (
+                      <td key={i} className="px-4 py-2.5 border border-gray-200 text-gray-600">{v}</td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <div className="text-center mt-6">
+            <Link href="/compare" className="inline-block bg-orange-500 text-white px-8 py-3 rounded-lg font-medium hover:bg-orange-600 transition shadow-lg shadow-orange-500/25">
+              試用 AI 比較表 →
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* Pricing */}
       <section className="py-20 px-4 bg-gray-50">
         <div className="max-w-4xl mx-auto">
