@@ -48,12 +48,12 @@ export async function POST(request: NextRequest) {
 - 優缺點各列 2-3 點，用 <br> 換行
 - 直接回傳 HTML，不要包含 \`\`\` 或其他標記`;
 
-    // 輪替嘗試所有 key
+    // 輪替嘗試所有 key（只有 429/503 才輪替，其他錯誤直接回報真實原因）
     for (let i = 0; i < apiKeys.length; i++) {
       const apiKey = apiKeys[i];
       try {
         const res = await fetch(
-          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+          `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
           {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -69,7 +69,15 @@ export async function POST(request: NextRequest) {
 
         if (!res.ok) {
           const errBody = await res.text();
-          console.error(`Gemini key ${i + 1}/${apiKeys.length} failed:`, errBody);
+          console.error(`Gemini key ${i + 1}/${apiKeys.length} failed (HTTP ${res.status}):`, errBody);
+          // 只有 429(額度) / 503(overload) 才輪替下一把 key；其他錯誤直接回真實訊息
+          if (res.status !== 429 && res.status !== 503) {
+            alertGeminiError("affidash", "/api/compare", `HTTP ${res.status}: ${errBody}`);
+            return Response.json(
+              { error: `Gemini API 錯誤 ${res.status}：${errBody.slice(0, 200)}` },
+              { status: 502 }
+            );
+          }
           if (i === apiKeys.length - 1) {
             alertGeminiError("affidash", "/api/compare", errBody);
             return Response.json(
