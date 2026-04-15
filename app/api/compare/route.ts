@@ -61,7 +61,9 @@ export async function POST(request: NextRequest) {
               contents: [{ parts: [{ text: prompt }] }],
               generationConfig: {
                 temperature: 0.7,
-                maxOutputTokens: 2048,
+                maxOutputTokens: 4096,
+                // 關閉 thinking — 比較表屬結構化輸出，不需推理，避免 thinking tokens 吃掉 output budget
+                thinkingConfig: { thinkingBudget: 0 },
               },
             }),
           }
